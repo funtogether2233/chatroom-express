@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
-// 定义 连接数据 默认端口 3306
+
+// 定义，连接数据库，默认端口 3306
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
@@ -8,4 +9,4 @@ const db = mysql.createPool({
   charset: "utf8",
 });
 
-module.exports = { db };
+module.exports = db;

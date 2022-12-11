@@ -1,17 +1,16 @@
 const app = require("express")();
 const server = require("http").Server(app);
-const io = require("socket.io")(server);
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const userRouter = require("./routes/user");
+// const io = require("socket.io")(server);
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(userRouter);
+
+// 监听3000
 server.listen(3000, () => {
   console.log("监听3000 http://localhost:3000/");
-});
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
-
-io.on("connection", (socket) => {
-  socket.on("clientData", (data) => {
-    console.log(data);
-  });
 });
