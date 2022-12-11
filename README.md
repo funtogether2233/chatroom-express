@@ -3,3 +3,9 @@
 此处是[后端部分](https://github.com/funtogether2233/chatroom-express)
 
 [前端部分在这里](https://github.com/funtogether2233/chatroom-vue)
+
+使用技术栈:
+
+- Express.js
+- Socket.io
+- MySQL
