@@ -1,7 +1,4 @@
-const fs = require("fs");
-const path = require("path");
 const socketio = require("socket.io");
-
 const socket = {};
 
 function getSocket(server) {
@@ -12,21 +9,26 @@ function getSocket(server) {
 
   // 连接
   io.on("connection", async (socket) => {
-    let timestamps = new Date().getTime();
-
+    console.log(`${socket.id}-连接成功`);
     socket.emit("severMessage", "hello world!");
     socket.on("clientData", (data) => {
       console.log(data);
     });
 
+    // 监听进入聊天模块
+    socket.on("enterChat", async () => {
+      console.log("该用户上线");
+    });
+
     // 断开连接
-    socket.on("disconnect", (reason) => {
-      console.log("id为" + socket.id + "的用户端口断开……断开原因：" + reason);
-      removeUser(socket.id);
+    socket.on("disconnect", async (reason) => {
+      console.log(`${socket.id}-断开连接-${reason}`);
+      // removeUser(socket.id);
     });
   });
 
   return io;
 }
 
+socket.getSocket = getSocket;
 module.exports = socket;
