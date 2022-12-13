@@ -8,22 +8,28 @@ function getSocket(server) {
   });
 
   // 连接
-  io.on("connection", async (socket) => {
-    console.log(`${socket.id}-连接成功`);
-    socket.emit("severMessage", "hello world!");
-    socket.on("clientData", (data) => {
-      console.log(data);
+  io.on("connection", (socket) => {
+    console.log(`[连接成功] socket ${socket.id}`);
+
+    // 进入聊天模块
+    socket.on("enterChat", (chatInfo) => {
+      const { chatType, userId, chatObject } = chatInfo;
+      const type = ["群组", "用户"];
+      console.log(`用户${userId}进入${type[chatType]}${chatObject}`);
     });
 
-    // 监听进入聊天模块
-    socket.on("enterChat", async () => {
-      console.log("该用户上线");
+    socket.on("clientMessage", (message) => {
+      const { chatType, fromId, toId, content } = message;
+      const type = ["群组", "用户"];
+      console.log(
+        `用户${fromId}向${type[chatType]}${toId}发送信息：${content}`
+      );
+      io.emit("severMessage", { chatType, fromId, toId, content });
     });
 
     // 断开连接
-    socket.on("disconnect", async (reason) => {
-      console.log(`${socket.id}-断开连接-${reason}`);
-      // removeUser(socket.id);
+    socket.on("disconnect", (reason) => {
+      console.log(`[断开连接] socket ${socket.id} ${reason}`);
     });
   });
 
