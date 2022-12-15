@@ -4,7 +4,7 @@ const db = require("../utils/db");
 const getUser = async (userId) => {
   return db
     .promise()
-    .query(`select id,user_id,password,nickname from user`)
+    .query(`select id,user_id,password,nickname,user_state from user`)
     .then(([rows]) => {
       for (const user of rows) {
         if (userId === user.user_id) {

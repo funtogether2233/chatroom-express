@@ -15,13 +15,24 @@ const loginUser = async (req, res) => {
     return;
   }
 
-  // 查询用户是否存在
+  // 查询用户是否存在或已登录
   const user = await userDao.getUser(userId);
   if (!user) {
     res.send(
       JSON.stringify({
         code: 400,
         msg: "账号不存在!",
+      })
+    );
+    return;
+  }
+
+  // 查询用户是否已登录
+  if (user.user_state) {
+    res.send(
+      JSON.stringify({
+        code: 400,
+        msg: "账号已登录!",
       })
     );
     return;
@@ -45,7 +56,7 @@ const loginUser = async (req, res) => {
       msg: "登录成功!",
       userInfo: {
         id: user.id,
-        account: user.userId,
+        userId: user.user_id,
         nickname: user.nickname,
       },
     })
