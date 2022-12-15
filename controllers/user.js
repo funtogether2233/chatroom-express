@@ -61,7 +61,7 @@ const loginUser = async (req, res) => {
       },
     })
   );
-  console.log(`用户${user.id}登陆`);
+  console.log(`用户${user.user_id}登陆`);
 };
 
 // user注册

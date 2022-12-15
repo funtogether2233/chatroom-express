@@ -18,13 +18,16 @@ function getSocket(server) {
       console.log(`用户${userId}进入${type[chatType]}${chatObject}`);
     });
 
+    // 接收消息
     socket.on("clientMessage", (message) => {
-      const { chatType, fromId, toId, content } = message;
+      const { chatType, fromId, toId, time, content } = message;
       const type = ["群组", "用户"];
       console.log(
-        `用户${fromId}向${type[chatType]}${toId}发送信息：${content}`
+        `用户${fromId}向${type[chatType]}${toId}发送信息：[${time}] ${content}`
       );
-      io.emit("severMessage", { chatType, fromId, toId, content });
+
+      // 广播消息
+      io.emit("severMessage", { chatType, fromId, toId, time, content });
     });
 
     // 断开连接
