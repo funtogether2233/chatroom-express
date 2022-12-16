@@ -1,4 +1,4 @@
-const userDao = require("../dao/user");
+const userDao = require("../dao/userDao");
 
 // 登陆验证
 const loginUser = async (req, res) => {

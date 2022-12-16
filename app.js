@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const socket = require("./routes/socket.js");
 socket.getSocket(server);
-const userRouter = require("./routes/user");
+const userRouter = require("./routes/userRouter");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
