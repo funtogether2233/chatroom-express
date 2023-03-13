@@ -4,8 +4,8 @@
     "cors": "^2.8.5",
     "dayjs": "^1.11.7",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
     "mysql2": "^2.3.3",
-    "sequelize": "^6.29.0",
     "socket.io": "^4.6.1"
   },
   "devDependencies": {

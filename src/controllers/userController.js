@@ -1,4 +1,6 @@
 const userDao = require("../dao/userDao");
+const jwt = require("jsonwebtoken");
+const jwtKey = "abcdefghijklmn";
 
 // 登陆验证
 const loginUser = async (req, res) => {
@@ -51,17 +53,21 @@ const loginUser = async (req, res) => {
     }
 
     // 登录成功
-    res.send(
-      JSON.stringify({
-        code: 200,
-        msg: "登录成功!",
-        userInfo: {
-          id: user.id,
-          userId: user.user_id,
-          nickname: user.nickname,
-        },
-      })
-    );
+    jwt.sign({ userId }, jwtKey, { expiresIn: "30s" }, (err, token) => {
+      res.send(
+        JSON.stringify({
+          code: 200,
+          msg: "登录成功!",
+          userInfo: {
+            id: user.id,
+            userId: user.user_id,
+            nickname: user.nickname,
+          },
+          token,
+        })
+      );
+    });
+
     console.log(`用户${user.user_id}登陆`);
   } catch (error) {
     console.log(error);
